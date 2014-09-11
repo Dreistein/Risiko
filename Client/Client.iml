@@ -9,6 +9,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="jsoup-1.7.3-javadoc" level="application" />
+    <orderEntry type="library" name="commons-logging-1.2" level="application" />
+    <orderEntry type="library" name="batik-anim" level="application" />
   </component>
 </module>
 

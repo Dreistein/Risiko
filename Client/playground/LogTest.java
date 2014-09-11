@@ -1,8 +1,6 @@
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.awt.*;
-
 /**
  * 10.09.2014
  *

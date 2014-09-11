@@ -2,8 +2,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.InputStream;
 import java.util.Scanner;
 import java.util.regex.Matcher;

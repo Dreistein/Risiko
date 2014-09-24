@@ -1,6 +1,6 @@
 -countries-
 1:Alaska:{2,6,32}
-2:ALberta:{1,6,7,9}
+2:Alberta:{1,6,7,9}
 3:Central America:{4,9,13}
 4:Eastern United States:{3,7,8,9}
 5:Greenland:{6,7,8,15}
@@ -12,20 +12,20 @@
 11:Brazil:{10,12,13,25}
 12:Peru:{10,11,13}
 13:Venezuela:{3,11,12}
-14:Great Britian:
-15:Iceland:
-16:Nothern Europe:
-17:Scandinavia:
-18:Southern Europe:
-19:Ukraine:
-20:Western Europe:
-21:Congo:
-22:East Africa:
-23:Egypt:
-24:Madagascar:
-25:North Africa:
-26:South Africa:
-27:Afghanistan:
+14:Great Britain:{15,16,17,20}
+15:Iceland:{5,14,17}
+16:Northern Europe:{14,17,18,19,20}
+17:Scandinavia:{14,15,16,19}
+18:Southern Europe:{16,19,7,23,25,33}
+19:Ukraine:{16,17,18,27,33,37}
+20:Western Europe:{14,16,18,25}
+21:Congo:{22,25,26}
+22:East Africa:{21,23,24,25,26,33}
+23:Egypt:{18,22,25,33}
+24:Madagascar:{22,26}
+25:North Africa:{11,18,20,21,22,23}
+26:South Africa:{21,22,24}
+27:Afghanistan:{19,28,29,33,37}
 28:China:
 29:India:
 30:Irkutsk:
@@ -37,10 +37,10 @@
 36:Siberia:
 37:Ural:
 38:Yakutsk:
-39:Eastern Australia:
-40:Indonesia:
-41:New Guinea:
-42:Eastern Australia:
+39:Eastern Australia:{41,42}
+40:Indonesia:{35,41,42}
+41:New Guinea:{39,40,42}
+42:Western Australia:{39,40,41}
 -continents-
 1:North America:5:{1,2,3,4,5,6,7,8,9}
 2:South America:2:{10,11,12,13}

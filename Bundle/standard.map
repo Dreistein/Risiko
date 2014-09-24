@@ -1,4 +1,4 @@
--countries-
+-territory-
 1:Alaska:{2,6,32}
 2:Alberta:{1,6,7,9}
 3:Central America:{4,9,13}
@@ -41,10 +41,12 @@
 40:Indonesia:{35,41,42}
 41:New Guinea:{39,40,42}
 42:Western Australia:{39,40,41}
--continents-
+-continent-
 1:North America:5:{1,2,3,4,5,6,7,8,9}
 2:South America:2:{10,11,12,13}
 3:Europe:5:{14,15,17,18,19,20}
 4:Africa:3:{21,22,23,24,25,26}
 5:Asia:7:{27,28,29,30,31,32,33,34,35,36,37,38}
 6:Australia:2:{39,40,41,42}
+-variable-
+-map-

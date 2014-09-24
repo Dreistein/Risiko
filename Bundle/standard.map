@@ -1,4 +1,17 @@
 -countries-
-1:Alaska
+1:Alaska:
+2:ALberta:
+3:Central America:
+4:Eastern United States:
+5:Greenland:
+6:Northwest Territory:
+7:Ontario:
+8:Quebec:
+9:Western United Staates:
+10:Argentinia:
+11:Brazil:
+12:Peru:
+13:Venezuela:
 -continents-
-1:North America:5:{1,}
+1:North America:5:{1,2,3,4,5,6,7,8,9}
+2:South America:2:{10,11,12,13}

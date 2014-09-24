@@ -1,17 +1,17 @@
 -countries-
-1:Alaska:
-2:ALberta:
-3:Central America:
-4:Eastern United States:
-5:Greenland:
-6:Northwest Territory:
-7:Ontario:
-8:Quebec:
-9:Western United Staates:
-10:Argentinia:
-11:Brazil:
-12:Peru:
-13:Venezuela:
+1:Alaska:{2,6,32}
+2:ALberta:{1,6,7,9}
+3:Central America:{4,9,13}
+4:Eastern United States:{3,7,8,9}
+5:Greenland:{6,7,8,15}
+6:Northwest Territory:{1,2,5,7}
+7:Ontario:{2,4,5,6,8,9}
+8:Quebec:{4,5,7}
+9:Western United Staates:{2,3,4,7}
+10:Argentinia:{11,12}
+11:Brazil:{10,12,13,25}
+12:Peru:{10,11,13}
+13:Venezuela:{3,11,12}
 14:Great Britian:
 15:Iceland:
 16:Nothern Europe:
@@ -40,7 +40,7 @@
 39:Eastern Australia:
 40:Indonesia:
 41:New Guinea:
-42:estern Australia:
+42:Eastern Australia:
 -continents-
 1:North America:5:{1,2,3,4,5,6,7,8,9}
 2:South America:2:{10,11,12,13}

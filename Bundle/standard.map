@@ -26,17 +26,17 @@
 25:North Africa:{11,18,20,21,22,23}
 26:South Africa:{21,22,24}
 27:Afghanistan:{19,28,29,33,37}
-28:China:
-29:India:
-30:Irkutsk:
-31:Japan:
-32:Kamchatka:
-33:Middle East:
-34:Mongolia:
-35:Siam:
-36:Siberia:
-37:Ural:
-38:Yakutsk:
+28:China:{27,29,34,35,36,37}
+29:India:{27,28,33,35}
+30:Irkutsk:{32,34,36,38}
+31:Japan:{32,34}
+32:Kamchatka:{30,31,34,38}
+33:Middle East:{18,19,22,23,27,29}
+34:Mongolia:{28,30,31,32,36}
+35:Siam:{28,29,40}
+36:Siberia:{28,30,34,37,38}
+37:Ural:{19,27,28,36}
+38:Yakutsk:{30,32,36}
 39:Eastern Australia:{41,42}
 40:Indonesia:{35,41,42}
 41:New Guinea:{39,40,42}

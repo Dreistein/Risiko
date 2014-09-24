@@ -7,8 +7,8 @@
 6:Northwest Territory:{1,2,5,7}
 7:Ontario:{2,4,5,6,8,9}
 8:Quebec:{4,5,7}
-9:Western United Staates:{2,3,4,7}
-10:Argentinia:{11,12}
+9:Western United States:{2,3,4,7}
+10:Argentina:{11,12}
 11:Brazil:{10,12,13,25}
 12:Peru:{10,11,13}
 13:Venezuela:{3,11,12}

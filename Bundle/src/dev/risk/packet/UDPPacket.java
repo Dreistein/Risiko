@@ -12,11 +12,14 @@ public class UDPPacket {
 
     public static final byte[] prefix = new byte[] {(byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)82, (byte)73, (byte)83, (byte)75, (byte)0x00};
     public static final byte TYPE_PING          = 0x00;
-    public static final byte TYPE_STATUS_REQ    = 0x01;
-    public static final byte TYPE_STATUS        = 0x02;
-    public static final byte TYPE_JOIN_REQ      = 0x03;
-    public static final byte TYPE_JOIN_ACK      = 0x04;
-    public static final byte TYPE_JOIN_NACK     = 0x05;
+    public static final byte TYPE_ACK           = 0x01;
+    public static final byte TYPE_STATUS_REQ    = 0x02;
+    public static final byte TYPE_STATUS        = 0x03;
+    public static final byte TYPE_JOIN_REQ      = 0x04;
+    public static final byte TYPE_JOIN          = 0x05;
+    public static final byte TYPE_JOIN_NACK     = 0x06;
+    public static final byte TYPE_LEAVE         = 0x07;
+    public static final byte TYPE_CHAT          = 0x08;
     public static final byte TYPE_ERROR         = 0x0F;
 
     protected byte type;

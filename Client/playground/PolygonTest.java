@@ -1,13 +1,9 @@
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 11.09.2014
@@ -17,30 +13,34 @@ import java.util.regex.Pattern;
 public class PolygonTest extends JPanel {
 
     public static void main(String[] args) throws  Exception {
-        InputStream in = PolygonTest.class.getResourceAsStream("map.svg");
-        Scanner scanner = new Scanner(in).useDelimiter("\\A");
-        String svg = scanner.hasNext() ? scanner.next() : "";
+        InputStream in = PolygonTest.class.getResourceAsStream("polygons.txt");
 
-        Document doc = Jsoup.parseBodyFragment(svg);
+        Scanner sc = new Scanner(in);
 
-        Element path = doc.getElementsByTag("path").first();
+        ArrayList<Polygon> p = new ArrayList<>();
 
-        String data = path.attr("d");
+        while (sc.hasNextLine()) {
+            Polygon polygon = new Polygon();
+            String line = sc.nextLine();
+            String[] coordinates = line
+                    .substring(line.indexOf('(')+1, line.indexOf(')'))
+                    .replace(",","")
+                    .split(" ");
 
-        Pattern p = Pattern.compile("(-?\\d+(.\\d+)?),(-?\\d+(.\\d+)?)");
-        Matcher m = p.matcher(data);
-
-        Polygon polygon = new Polygon();
-        while (m.find()) {
-            double x = Double.valueOf(m.group(1)) * 10;
-            double y = Double.valueOf(m.group(3)) * 10;
-            polygon.addPoint((int) x, (int) y);
+            for (int i = 0; i < coordinates.length; i++) {
+                try {
+                    polygon.addPoint(Integer.valueOf(coordinates[i]),Integer.valueOf(coordinates[++i]));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+            p.add(polygon);
         }
 
         JFrame frame = new JFrame("Polygon Test");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        frame.add(new PolygonTest(polygon));
+        frame.add(new PolygonTest(p));
 
         frame.pack();
         frame.setLocationRelativeTo(null);
@@ -49,10 +49,10 @@ public class PolygonTest extends JPanel {
     }
 
 
-    protected Polygon polygon;
+    protected ArrayList<Polygon> polygons;
 
-    public PolygonTest(Polygon p) {
-        polygon = p;
+    public PolygonTest(Collection<Polygon> p) {
+        polygons = new ArrayList<>(p);
     }
 
     @Override
@@ -60,6 +60,8 @@ public class PolygonTest extends JPanel {
         super.paint(g);
         g.setColor(Color.BLACK);
         Graphics2D g2 = (Graphics2D) g;
-        g2.draw(polygon);
+        for (Polygon polygon : polygons) {
+            g2.draw(polygon);
+        }
     }
 }

@@ -1,8 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -40,7 +43,17 @@ public class PolygonTest extends JPanel {
         JFrame frame = new JFrame("Polygon Test");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        frame.add(new PolygonTest(p));
+        PolygonTest ptest = new PolygonTest(p);
+        frame.add(ptest);
+
+        frame.getContentPane().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    ptest.setClickPoint(e.getPoint());
+                }
+            }
+        });
 
         frame.pack();
         frame.setLocationRelativeTo(null);
@@ -50,6 +63,7 @@ public class PolygonTest extends JPanel {
 
 
     protected ArrayList<Polygon> polygons;
+    protected Polygon highlighted;
 
     public PolygonTest(Collection<Polygon> p) {
         polygons = new ArrayList<>(p);
@@ -58,10 +72,26 @@ public class PolygonTest extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        g.setColor(Color.BLACK);
         Graphics2D g2 = (Graphics2D) g;
-        for (Polygon polygon : polygons) {
-            g2.draw(polygon);
+        //draw polygons
+        g2.setColor(Color.CYAN);
+        polygons.forEach(g2::fillPolygon);
+        g2.setColor(Color.BLACK);
+        polygons.forEach(g2::draw);
+        //draw highlighted polygon
+        if (highlighted != null) {
+            g2.setColor(Color.RED);
+            g2.draw(highlighted);
         }
+    }
+
+    public void setClickPoint(Point p) {
+        highlighted = null;
+        for (Polygon polygon : polygons) {
+            if (polygon.contains(p)) {
+                highlighted = polygon;
+            }
+        }
+        repaint();
     }
 }

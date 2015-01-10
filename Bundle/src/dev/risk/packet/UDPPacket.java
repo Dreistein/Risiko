@@ -1,6 +1,7 @@
 package dev.risk.packet;
 
 import java.nio.ByteBuffer;
+import java.time.Instant;
 import java.util.Arrays;
 
 /**
@@ -23,7 +24,8 @@ public class UDPPacket {
     public static final byte TYPE_ERROR         = 0x0F;
 
     protected byte type;
-    protected int requestID;
+    protected int packetID;
+    protected Instant time;
     protected byte[] payload;
 
 
@@ -33,7 +35,7 @@ public class UDPPacket {
         type = data[8];
 
         ByteBuffer bb = ByteBuffer.wrap(Arrays.copyOfRange(data, 9, 9+4));
-        requestID = bb.getInt();
+        packetID = bb.getInt();
 
         byte[] paylenBy = new byte[4];
         Arrays.fill(paylenBy, (byte)0);
@@ -47,9 +49,16 @@ public class UDPPacket {
             payload = new byte[0];
         }
     }
-
     public UDPPacket(byte type) {
+        this(type, 0);
+    }
+    public UDPPacket(byte type, int packetID) {
+        this(type, packetID, Instant.now());
+    }
+    public UDPPacket(byte type, int packetID, Instant time) {
         this.type = type;
+        this.packetID = packetID;
+        this.time = time;
         payload = new byte[0];
     }
 
@@ -63,7 +72,6 @@ public class UDPPacket {
         }
         return true;
     }
-
     public byte[] serialize() {
         byte[] data = new byte[16+payload.length];
         Arrays.fill(data, (byte)0);
@@ -74,7 +82,7 @@ public class UDPPacket {
         data[8] = type;
 
         //request ID
-        byte[] reqIDb = ByteBuffer.allocate(4).putInt(requestID).array();
+        byte[] reqIDb = ByteBuffer.allocate(4).putInt(packetID).array();
         System.arraycopy(reqIDb,0,data,9,4);
 
         //payload
@@ -90,20 +98,48 @@ public class UDPPacket {
     public byte getType() {
         return type;
     }
-
-    public int getRequestID() {
-        return requestID;
+    public int getPacketID() {
+        return packetID;
     }
-
+    public Instant getTime() {
+        return time;
+    }
     public byte[] getPayload() {
         return payload;
     }
 
-    public void setRequestID(int requestID) {
-        this.requestID = requestID;
+    public void setPacketID(int requestID) {
+        this.packetID = requestID;
     }
-
     public void setPayload(byte[] payload) {
         this.payload = payload;
     }
+
+    //helper
+    public static byte[] serializeString(String s) {
+        return (s+'\0').getBytes();
+    }
+    public static byte[] serializeInt(int n) {
+        ByteBuffer bb = ByteBuffer.allocate(4).putInt(n);
+        return bb.array();
+    }
+    public static String desirializeString(byte[] b) {
+        return desirializeString(b, 0);
+    }
+    public static String desirializeString(byte[] b, int startpos) {
+        int i = startpos;
+        for (; i < b.length; i++) {
+            if (b[i] == 0) {
+                byte[] data = Arrays.copyOfRange(b,0,i);
+                return new String(data);
+            }
+        }
+        return "";
+    }
+    public static int deserializeInt(byte[] b) {
+        byte[] data = Arrays.copyOf(b, 4);
+        ByteBuffer bb = ByteBuffer.wrap(b);
+        return bb.getInt();
+    }
+
 }

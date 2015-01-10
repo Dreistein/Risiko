@@ -1,5 +1,6 @@
 package dev.risk.game;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ public class Country {
 
     protected int id;
     protected String name;
+    protected Polygon place;
     protected List<Integer> neighbors;
     protected Continent continent;
 
@@ -38,6 +40,10 @@ public class Country {
 
     public Continent getContinent() {
         return continent;
+    }
+
+    public Polygon getPlace() {
+        return place;
     }
 
     public class Builder {

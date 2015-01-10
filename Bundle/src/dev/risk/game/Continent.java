@@ -1,5 +1,6 @@
 package dev.risk.game;
 
+import java.awt.*;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class Continent {
     protected String name;
     protected List<Country> countries;
     protected int bonus;
+    protected Color color;
 
     protected Continent(int id, String name, int bonus) {
         this.id = id;
@@ -31,6 +33,10 @@ public class Continent {
 
     public int getBonus() {
         return bonus;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public List<Country> getCountries() {

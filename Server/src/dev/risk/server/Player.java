@@ -1,6 +1,8 @@
 package dev.risk.server;
 
-import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.time.Duration;
+import java.time.Instant;
 
 /**
  * 07.01.2015
@@ -8,31 +10,35 @@ import java.net.InetAddress;
  * @author Dreistein
  */
 public class Player {
-    protected int id;
-    protected InetAddress address;
-    protected int port;
+    protected byte id;
+    protected InetSocketAddress address;
     protected String name;
+    protected Instant lastPacket;
 
-    public Player(int id, String name, InetAddress addr, int port) {
+    public Player(byte id, String name, InetSocketAddress addr) {
         this.id = id;
-        this.port = port;
         this.name = name;
         this.address = addr;
+        resetElapsedTime();
     }
 
-    public int getId() {
+    public byte getId() {
         return id;
     }
 
-    public InetAddress getAddress() {
+    public InetSocketAddress getAddress() {
         return address;
-    }
-
-    public int getPort() {
-        return port;
     }
 
     public String getName() {
         return name;
+    }
+
+    public Duration getElapsedTime() {
+        return Duration.between(lastPacket, Instant.now()).abs();
+    }
+
+    public void resetElapsedTime() {
+        lastPacket = Instant.now();
     }
 }

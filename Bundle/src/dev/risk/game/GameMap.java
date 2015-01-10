@@ -39,7 +39,7 @@ public class GameMap {
         public static GameMap load(URL mapRes) throws IOException {
             String s = "";
             try (Scanner sc = new Scanner(mapRes.openStream())) {
-                sc.useDelimiter("\\A");
+                sc.useDelimiter("\\A"); //get the whole string
                 s = sc.next();
             } catch (IOException e) {
                 log.error("Could not load Map-File", e);

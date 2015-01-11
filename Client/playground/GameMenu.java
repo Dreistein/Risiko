@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Jakob on 11.01.2015.
@@ -31,6 +32,11 @@ public class GameMenu extends javax.swing.JFrame {
         setTitle("Risiko Multiplayer");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+        NewGame.addActionListener((ActionListener) this);
+        LoadGame.addActionListener((ActionListener) this);
+
+        NewGame.setActionCommand();
+        LoadGame.setActionCommand();
 
 
         setVisible(true);

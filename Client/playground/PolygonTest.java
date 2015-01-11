@@ -12,6 +12,8 @@ import java.util.Scanner;
  * 11.09.2014
  *
  * @author Dreistein
+ * edited 10.01.2015
+ * @author Jakob
  */
 public class PolygonTest extends JPanel {
 
@@ -42,6 +44,7 @@ public class PolygonTest extends JPanel {
 
         JFrame frame = new JFrame("Polygon Test");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
 
         PolygonTest ptest = new PolygonTest(p);
         frame.add(ptest);

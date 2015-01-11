@@ -9,8 +9,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Bundle" />
-    <orderEntry type="library" name="commons-logging-1.2" level="application" />
+    <orderEntry type="module" module-name="Bundle" exported="" />
+    <orderEntry type="library" exported="" name="commons-logging-1.2" level="application" />
+    <orderEntry type="library" name="commons-logging-1" level="project" />
   </component>
 </module>
-

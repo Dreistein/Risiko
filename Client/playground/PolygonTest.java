@@ -3,10 +3,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * 11.09.2014
@@ -22,8 +19,9 @@ public class PolygonTest extends JPanel {
 
         Scanner sc = new Scanner(in);
 
-        ArrayList<Polygon> p = new ArrayList<>();
+        HashMap<Polygon, Integer> p = new HashMap<>();
 
+        int l = 1;
         while (sc.hasNextLine()) {
             Polygon polygon = new Polygon();
             String line = sc.nextLine();
@@ -39,7 +37,7 @@ public class PolygonTest extends JPanel {
                     e.printStackTrace();
                 }
             }
-            p.add(polygon);
+            p.put(polygon, l++);
         }
 
         JFrame frame = new JFrame("Polygon Test");
@@ -53,6 +51,7 @@ public class PolygonTest extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
+                    System.out.printf("%d, %d: ",e.getPoint().x, e.getPoint().y);
                     ptest.setClickPoint(e.getPoint());
                 }
             }
@@ -65,11 +64,11 @@ public class PolygonTest extends JPanel {
     }
 
 
-    protected ArrayList<Polygon> polygons;
+    protected HashMap<Polygon, Integer> polygons;
     protected Polygon highlighted;
 
-    public PolygonTest(Collection<Polygon> p) {
-        polygons = new ArrayList<>(p);
+    public PolygonTest(HashMap<Polygon, Integer> p) {
+        polygons = p;
     }
 
     @Override
@@ -78,9 +77,9 @@ public class PolygonTest extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         //draw polygons
         g2.setColor(Color.CYAN);
-        polygons.forEach(g2::fillPolygon);
-        g2.setColor(Color.BLACK);
-        polygons.forEach(g2::draw);
+        polygons.keySet().forEach(g2::fillPolygon);
+        g2.setColor(Color.DARK_GRAY);
+        polygons.keySet().forEach(g2::draw);
         //draw highlighted polygon
         if (highlighted != null) {
             g2.setColor(Color.RED);
@@ -90,9 +89,10 @@ public class PolygonTest extends JPanel {
 
     public void setClickPoint(Point p) {
         highlighted = null;
-        for (Polygon polygon : polygons) {
+        for (Polygon polygon : polygons.keySet()) {
             if (polygon.contains(p)) {
                 highlighted = polygon;
+                System.out.println(polygons.get(highlighted));
             }
         }
         repaint();

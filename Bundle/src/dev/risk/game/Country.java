@@ -13,15 +13,16 @@ public class Country {
 
     protected int id;
     protected String name;
-    protected Polygon place;
     protected List<Integer> neighbors;
-    protected Continent continent;
+    protected int continent;
+    protected List<Polygon> area;
 
     protected Player owner;
     protected int troops;
 
     protected Country(int id, String name) {
         neighbors = new ArrayList<>();
+        area = new ArrayList<>();
         this.id = id;
         this.name = name;
     }
@@ -38,15 +39,15 @@ public class Country {
         return neighbors;
     }
 
-    public Continent getContinent() {
+    public int getContinent() {
         return continent;
     }
 
-    public Polygon getPlace() {
-        return place;
+    public Polygon[] getArea() {
+        return area.toArray(new Polygon[area.size()]);
     }
 
-    public class Builder {
+    public static class Builder {
 
         Country country;
 
@@ -59,8 +60,13 @@ public class Country {
             return this;
         }
 
-        public Builder setContinent(Continent c) {
+        public Builder setContinent(int c) {
             country.continent = c;
+            return this;
+        }
+
+        public Builder addArea(Polygon p) {
+            country.area.add(p);
             return this;
         }
 

@@ -9,15 +9,14 @@ public class GameInfo {
     protected int maxPlayer;
     protected int actualPlayer;
     protected String gameName;
-    protected GameMap map;
+    protected Map map;
     protected String password;
 
-    public GameInfo(int maxPlayer, int actualPlayer, String gameName, GameMap map, String password) {
+    public GameInfo(int maxPlayer, String gameName, Map map) {
         this.maxPlayer = maxPlayer;
-        this.actualPlayer = actualPlayer;
         this.gameName = gameName;
         this.map = map;
-        this.password = password;
+        this.password = "";
     }
 
     public int getMaxPlayer() {
@@ -44,11 +43,11 @@ public class GameInfo {
         this.gameName = gameName;
     }
 
-    public GameMap getMap() {
+    public Map getMap() {
         return map;
     }
 
-    public void setMap(GameMap map) {
+    public void setMap(Map map) {
         this.map = map;
     }
 

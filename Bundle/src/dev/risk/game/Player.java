@@ -6,4 +6,5 @@ package dev.risk.game;
  * @author Dreistein
  */
 public class Player {
+    public int troops = 0;
 }

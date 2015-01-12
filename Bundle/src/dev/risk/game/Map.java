@@ -154,7 +154,7 @@ public class Map {
                 for (String neighbor : neighbors) {
                     b.addNeighbor(Integer.parseInt(neighbor));
                 }
-                String[] polygons = fragments[3].split(",polygon");
+                String[] polygons = fragments[5].split(",polygon");
                 for (String polygon : polygons) {
                     Polygon p = new Polygon();
                     polygon = polygon.replaceAll("(polygon|[(),])", "");
@@ -164,6 +164,7 @@ public class Map {
                     }
                     b.addArea(p);
                 }
+                b.setPointsPoint(new Point((int)(Integer.parseInt(fragments[3])/0.75),(int)(Integer.parseInt(fragments[4])/0.75)));
                 b.setContinent(mapping.get(id));
                 m.countries.put(id, b.create());
             }

@@ -108,6 +108,16 @@ public class MapPane extends JPanel {
             }
         }
 
+        for (Country c : map.getCountries().values()) {
+            g2.setColor(Color.WHITE);
+            int x = c.getPointsPoint().x-10;
+            int y = c.getPointsPoint().y-10;
+            g2.fillArc(x,y,20,20,0,360);
+            g2.setColor(Color.DARK_GRAY);
+            g2.drawArc(x, y, 20, 20, 0, 360);
+            g2.drawString("30",x+5,y+15);
+        }
+
         AffineTransform at = new AffineTransform();
         at.scale(0.75,0.75);
         AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
@@ -122,6 +132,7 @@ public class MapPane extends JPanel {
         if (c != selected) {
             selected = c;
             repaint();
+            System.out.println(c.getName());
         }
     }
 

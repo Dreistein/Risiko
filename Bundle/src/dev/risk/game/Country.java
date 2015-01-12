@@ -16,6 +16,8 @@ public class Country {
     protected List<Integer> neighbors;
     protected int continent;
     protected List<Polygon> area;
+    protected Point pointsPoint;
+
 
     protected Player owner;
     protected int troops;
@@ -47,6 +49,10 @@ public class Country {
         return area.toArray(new Polygon[area.size()]);
     }
 
+    public Point getPointsPoint() {
+        return pointsPoint;
+    }
+
     public static class Builder {
 
         Country country;
@@ -67,6 +73,11 @@ public class Country {
 
         public Builder addArea(Polygon p) {
             country.area.add(p);
+            return this;
+        }
+
+        public Builder setPointsPoint(Point p) {
+            country.pointsPoint = p;
             return this;
         }
 

@@ -19,7 +19,7 @@ public class MapDemo extends JPanel {
 
         frame.add(new MapPane(m));
 
-        frame.setSize(new Dimension(950, 530));
+        frame.setSize(new Dimension(930, 530));
 
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);

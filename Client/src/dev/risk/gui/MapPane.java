@@ -27,6 +27,7 @@ public class MapPane extends JPanel {
     HashMap<Polygon, Country> table;
     Country hover = null;
     Country selected = null;
+    Country second = null;
 
     public MapPane(Map m) {
         map = m;
@@ -59,11 +60,13 @@ public class MapPane extends JPanel {
         MouseAdapter adapter = new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                Point p = e.getPoint();
+                p.x /= 0.75;
+                p.y /= 0.75;
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    Point p = e.getPoint();
-                    p.x /= 0.75;
-                    p.y /= 0.75;
-                    onClick(p);
+                    onClick(p, true);
+                } else if (e.getButton() == MouseEvent.BUTTON3) {
+                    onClick(p, false);
                 }
             }
 
@@ -83,7 +86,9 @@ public class MapPane extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         BufferedImage im = new BufferedImage(1240,640, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage im2 = new BufferedImage(1240,640, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) im.getGraphics();
+        Graphics2D g3 = (Graphics2D) im2.getGraphics();
 
         for (Country c : map.getCountries().values()) {
             if (c == hover || c == selected) {
@@ -106,6 +111,36 @@ public class MapPane extends JPanel {
             for (Polygon p : selected.getArea()) {
                 g2.fillPolygon(p);
             }
+            if (second != null) {
+                int x1 = selected.getPointsPoint().x;
+                int y1 = selected.getPointsPoint().y;
+                int dx = second.getPointsPoint().x - x1;
+                int dy = second.getPointsPoint().y - y1;
+
+                double phi = Math.atan2(dy,dx); //angle between points
+                double len = selected.getPointsPoint().distance(second.getPointsPoint()); //distance between points
+                double ux = dx/len; //unit vector x
+                double uy = dy/len; //unit vector y
+
+                double urx = 10*Math.cos(phi + Math.PI / 2); //right-hand orthogonal unit vector x
+                double ury = 10*Math.sin(phi + Math.PI / 2); //right-hand orthogonal unit vector y
+                double ulx = 10*Math.cos(phi - Math.PI / 2); //left-hand orthogonal unit vector x
+                double uly = 10*Math.sin(phi - Math.PI / 2); //left-hand orthogonal unit vector y
+
+                Polygon arrow = new Polygon();
+                arrow.addPoint((int)(x1+ux*15+urx),(int)(y1+uy*15+ury));
+                arrow.addPoint((int)(x1+ux*15+ulx),(int)(y1+uy*15+uly));
+                arrow.addPoint((int)(x1+ux*(len-45)+ulx),(int)(y1+uy*(len-45)+uly));
+                arrow.addPoint((int)(x1+ux*(len-45)+3*ulx),(int)(y1+uy*(len-45)+3*uly));
+                arrow.addPoint((int)(x1+ux*(len-15)),(int)(y1+uy*(len-15)));
+                arrow.addPoint((int)(x1+ux*(len-45)+3*urx),(int)(y1+uy*(len-45)+3*ury));
+                arrow.addPoint((int)(x1+ux*(len-45)+urx),(int)(y1+uy*(len-45)+ury));
+
+                g3.setColor(Color.RED);
+                g3.fillPolygon(arrow);
+                g3.setColor(Color.DARK_GRAY);
+                g3.draw(arrow);
+            }
         }
 
         for (Country c : map.getCountries().values()) {
@@ -125,14 +160,23 @@ public class MapPane extends JPanel {
         rendered = scaleOp.filter(im, rendered);
         g.drawImage(rendered, 0,0,width,height,0,0,930,480, (img, infoflags, x, y, width, height) -> true);
         g.drawImage(staticMap, 0,0,width,height,0,0,staticMap.getWidth(),staticMap.getHeight(), (img, infoflags, x, y, width, height) -> true);
+        rendered = scaleOp.filter(im2, rendered);
+        g.drawImage(rendered, 0,0,width,height,0,0,930,480, (img, infoflags, x, y, width, height) -> true);
+
     }
 
-    public void onClick(Point p) {
+    public void onClick(Point p, boolean left) {
         Country c = table.get(getInBounds(p));
-        if (c != selected) {
-            selected = c;
-            repaint();
-            System.out.println(c.getName());
+        if(left) {
+            if (c != selected) {
+                selected = c;
+                repaint();
+            }
+        } else {
+            if (c != second) {
+                second = c;
+                repaint();
+            }
         }
     }
 
@@ -143,6 +187,7 @@ public class MapPane extends JPanel {
             repaint();
         }
     }
+
 
     protected Polygon getInBounds(Point p) {
         for (Polygon polygon : table.keySet()) {

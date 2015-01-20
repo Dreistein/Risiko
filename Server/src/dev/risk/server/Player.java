@@ -15,6 +15,10 @@ public class Player {
     protected String name;
     protected Instant lastPacket;
 
+    public Player(byte id, String name) {
+        this(id, name, null);
+    }
+
     public Player(byte id, String name, InetSocketAddress addr) {
         this.id = id;
         this.name = name;

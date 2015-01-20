@@ -7,14 +7,13 @@ package dev.risk.game;
  */
 public class GameInfo {
     protected int maxPlayer;
-    protected int actualPlayer;
-    protected String gameName;
+    protected String serverName;
     protected Map map;
     protected String password;
 
     public GameInfo(int maxPlayer, String gameName, Map map) {
         this.maxPlayer = maxPlayer;
-        this.gameName = gameName;
+        this.serverName = gameName;
         this.map = map;
         this.password = "";
     }
@@ -27,20 +26,12 @@ public class GameInfo {
         this.maxPlayer = maxPlayer;
     }
 
-    public int getActualPlayer() {
-        return actualPlayer;
+    public String getServerName() {
+        return serverName;
     }
 
-    public void setActualPlayer(int actualPlayer) {
-        this.actualPlayer = actualPlayer;
-    }
-
-    public String getGameName() {
-        return gameName;
-    }
-
-    public void setGameName(String gameName) {
-        this.gameName = gameName;
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
     }
 
     public Map getMap() {

@@ -1,5 +1,7 @@
 package dev.risk.packet;
 
+import com.sun.istack.internal.NotNull;
+
 import java.nio.ByteBuffer;
 import java.time.Instant;
 import java.util.Arrays;
@@ -14,13 +16,14 @@ public class UDPPacket {
     public static final byte[] prefix = new byte[] {(byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)82, (byte)73, (byte)83, (byte)75, (byte)0x00};
     public static final byte TYPE_PING          = 0x00;
     public static final byte TYPE_ACK           = 0x01;
-    public static final byte TYPE_STATUS_REQ    = 0x02;
-    public static final byte TYPE_STATUS        = 0x03;
-    public static final byte TYPE_JOIN_REQ      = 0x04;
-    public static final byte TYPE_JOIN          = 0x05;
-    public static final byte TYPE_JOIN_NACK     = 0x06;
+    public static final byte TYPE_NACK          = 0x02;
+    public static final byte TYPE_SERVER_INFO   = 0x03;
+    public static final byte TYPE_STATUS        = 0x04;
+    public static final byte TYPE_PLAYER_LIST   = 0x05;
+    public static final byte TYPE_JOIN          = 0x06;
     public static final byte TYPE_LEAVE         = 0x07;
     public static final byte TYPE_CHAT          = 0x08;
+    public static final byte TYPE_GAME_EVENT    = 0x09;
     public static final byte TYPE_ERROR         = 0x0F;
 
     protected byte type;
@@ -34,17 +37,20 @@ public class UDPPacket {
             throw new IllegalArgumentException("Not a Risk Packet!");
         type = data[8];
 
-        ByteBuffer bb = ByteBuffer.wrap(Arrays.copyOfRange(data, 9, 9+4));
+        ByteBuffer bb = ByteBuffer.wrap(Arrays.copyOfRange(data, 9, 9+8));
+        time = Instant.ofEpochMilli(bb.getLong());
+
+        bb = ByteBuffer.wrap(Arrays.copyOfRange(data, 17, 17+4));
         packetID = bb.getInt();
 
         byte[] paylenBy = new byte[4];
         Arrays.fill(paylenBy, (byte)0);
-        System.arraycopy(data,13,paylenBy,1,3);
+        System.arraycopy(data,21,paylenBy,1,3);
         bb = ByteBuffer.wrap(paylenBy);
         int payloadLength = bb.getInt();
 
         if (payloadLength > 0) {
-            payload = Arrays.copyOfRange(data, 16, 16 + payloadLength);
+            payload = Arrays.copyOfRange(data, 24, 24 + payloadLength);
         } else {
             payload = new byte[0];
         }
@@ -63,7 +69,7 @@ public class UDPPacket {
     }
 
     protected boolean isRiskPacket(byte[] data) {
-        if (data.length < 16) //the header size is 16 bytes
+        if (data.length < 24) //the header size is 16 bytes
             return false;
 
         for (int i = 0; i<prefix.length; i++) {
@@ -73,7 +79,7 @@ public class UDPPacket {
         return true;
     }
     public byte[] serialize() {
-        byte[] data = new byte[16+payload.length];
+        byte[] data = new byte[24+payload.length];
         Arrays.fill(data, (byte)0);
 
         //prefix
@@ -81,14 +87,16 @@ public class UDPPacket {
         //request type
         data[8] = type;
 
-        //request ID
-        byte[] reqIDb = ByteBuffer.allocate(4).putInt(packetID).array();
-        System.arraycopy(reqIDb,0,data,9,4);
+        //copy time
+        System.arraycopy(serialize(time.toEpochMilli()), 0, data, 9, 8);
+        //packet ID
+        byte[] packetIDb = ByteBuffer.allocate(4).putInt(packetID).array();
+        System.arraycopy(packetIDb,0,data,17,4);
 
         //payload
         if (payload.length > 0) {
             byte[] paylenb = ByteBuffer.allocate(4).putInt(payload.length).array();
-            System.arraycopy(paylenb, 1, data, 13, 3);
+            System.arraycopy(paylenb, 1, data, 21, 3);
             System.arraycopy(payload,0,data,16,payload.length);
         }
 
@@ -116,21 +124,25 @@ public class UDPPacket {
     }
 
     //helper
-    public static byte[] serializeString(String s) {
+    public static byte[] serialize(@NotNull String s) {
         return (s+'\0').getBytes();
     }
-    public static byte[] serializeInt(int n) {
+    public static byte[] serialize(int n) {
         ByteBuffer bb = ByteBuffer.allocate(4).putInt(n);
         return bb.array();
     }
-    public static String desirializeString(byte[] b) {
-        return desirializeString(b, 0);
+    public static byte[] serialize(long n) {
+        ByteBuffer bb = ByteBuffer.allocate(8).putLong(n);
+        return bb.array();
     }
-    public static String desirializeString(byte[] b, int startpos) {
+    public static String deserializeString(byte[] b) {
+        return deserializeString(b, 0);
+    }
+    public static String deserializeString(byte[] b, int startpos) {
         int i = startpos;
         for (; i < b.length; i++) {
             if (b[i] == 0) {
-                byte[] data = Arrays.copyOfRange(b,0,i);
+                byte[] data = Arrays.copyOfRange(b,startpos,i);
                 return new String(data);
             }
         }

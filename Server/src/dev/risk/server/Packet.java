@@ -21,6 +21,7 @@ public class Packet {
     public Packet(InetSocketAddress address, UDPPacket packet) {
         this.address = address;
         this.packet = packet;
+        time = Instant.now();
     }
 
     protected InetSocketAddress getAddress() {

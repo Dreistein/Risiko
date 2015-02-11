@@ -97,7 +97,7 @@ public class UDPPacket {
         if (payload.length > 0) {
             byte[] paylenb = ByteBuffer.allocate(4).putInt(payload.length).array();
             System.arraycopy(paylenb, 1, data, 21, 3);
-            System.arraycopy(payload,0,data,16,payload.length);
+            System.arraycopy(payload,0,data,24,payload.length);
         }
 
         return data;

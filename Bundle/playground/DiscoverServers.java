@@ -21,21 +21,26 @@ public class DiscoverServers {
         packet.setPort(3157);
 
         socket.send(packet);
-        byte[] buffer = new byte[1024];
+        byte[] buffer;
         while (!Thread.interrupted()) {
             try {
+                buffer = new byte[1024];
                 packet = new DatagramPacket(buffer, buffer.length);
                 socket.receive(packet);
 
                 udpPacket = new UDPPacket(packet.getData());
 
-                UDPPacket ackPacket = new UDPPacket(UDPPacket.TYPE_ACK);
-                ackPacket.setPacketID(udpPacket.getPacketID());
-                byte [] ackdata = ackPacket.serialize();
-                DatagramPacket ack = new DatagramPacket(ackdata, ackdata.length);
-                ack.setAddress(packet.getAddress());
-                ack.setPort(packet.getPort());
-                socket.send(ack);
+                if (udpPacket.getType() != UDPPacket.TYPE_ACK) {
+                    UDPPacket ackPacket = new UDPPacket(UDPPacket.TYPE_ACK);
+                    ackPacket.setPacketID(udpPacket.getPacketID());
+                    byte[] ackdata = ackPacket.serialize();
+                    DatagramPacket ack = new DatagramPacket(ackdata, ackdata.length);
+                    ack.setAddress(packet.getAddress());
+                    ack.setPort(packet.getPort());
+                    socket.send(ack);
+                }
+
+                System.out.println(packet.getSocketAddress());
 
                 if (udpPacket.getType() == UDPPacket.TYPE_SERVER_INFO) {
                     byte[] payload = udpPacket.getPayload();

@@ -18,7 +18,6 @@ public class Country {
     protected List<Polygon> area;
     protected Point pointsPoint;
 
-
     protected Player owner;
     protected int troops;
 
@@ -51,6 +50,22 @@ public class Country {
 
     public Point getPointsPoint() {
         return pointsPoint;
+    }
+
+    public Player getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
+    }
+
+    public int getTroops() {
+        return troops;
+    }
+
+    public void setTroops(int troops) {
+        this.troops = troops;
     }
 
     public static class Builder {

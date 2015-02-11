@@ -4,6 +4,7 @@ import dev.risk.event.Event;
 import dev.risk.event.Observable;
 import dev.risk.event.Observer;
 import dev.risk.game.GameInfo;
+import dev.risk.game.Player;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;

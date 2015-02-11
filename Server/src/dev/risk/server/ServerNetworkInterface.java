@@ -2,6 +2,7 @@ package dev.risk.server;
 
 import dev.risk.event.Observable;
 import dev.risk.game.GameInfo;
+import dev.risk.game.Player;
 import dev.risk.packet.UDPPacket;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -80,7 +81,7 @@ public class ServerNetworkInterface extends Observable implements Runnable {
         boolean b = true;
         for (Player player1 : player.values()) {
             if (player1 != p) {
-                b &= send(packet, player1.address);
+                b &= send(packet, player1.getAddress());
             }
         }
         return b;
@@ -148,7 +149,6 @@ public class ServerNetworkInterface extends Observable implements Runnable {
                         //remove the acknowledged packet
                         if (p.getAddress().equals(address) && p.getPacketID() == packet.getPacketID()) {
                             pendingPackets.remove(p);
-                            break;
                         }
                     }
                     continue; //continue with next packet
@@ -288,7 +288,7 @@ public class ServerNetworkInterface extends Observable implements Runnable {
             UDPPacket response = new UDPPacket(UDPPacket.TYPE_CHAT, generatePacketID());
             payload[1] = 1; //set private message
             response.setPayload(payload);
-            send(response, to.address);
+            send(response, to.getAddress());
             return;
         }
 
@@ -299,11 +299,11 @@ public class ServerNetworkInterface extends Observable implements Runnable {
     }
 
     protected void onLeave(UDPPacket packet, Player p) {
-        if (p.id == 1) {
+        if (p.getId() == 1) {
             byte id = packet.getPayload()[0];
             Player kickPlayer = null;
             for (Player searchPlayer : player.values()) {
-                if (searchPlayer.id == id) {
+                if (searchPlayer.getId() == id) {
                     kickPlayer = searchPlayer;
                     break;
                 }

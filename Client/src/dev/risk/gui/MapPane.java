@@ -144,7 +144,7 @@ public class MapPane extends JPanel {
         }
 
         for (Country c : map.getCountries().values()) {
-            g2.setColor(Color.WHITE);
+            g2.setColor(GuiColors.playerColor.get(c.getOwner().getId()));
             int x = c.getPointsPoint().x-10;
             int y = c.getPointsPoint().y-10;
             g2.fillArc(x,y,20,20,0,360);
@@ -187,7 +187,6 @@ public class MapPane extends JPanel {
             repaint();
         }
     }
-
 
     protected Polygon getInBounds(Point p) {
         for (Polygon polygon : table.keySet()) {

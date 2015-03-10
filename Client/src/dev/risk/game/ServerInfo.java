@@ -16,12 +16,13 @@ public class ServerInfo {
     protected String mapName;
     protected SocketAddress address;
 
-    public ServerInfo(String name, int player, int maxPlaye, boolean password, String mapName, SocketAddress address) {
+    public ServerInfo(String name, int player, int maxPlayer, boolean password, String mapName, SocketAddress address) {
         this.name = name;
         this.player = player;
-        this.maxPlaye = maxPlaye;
+        this.maxPlaye = maxPlayer;
         this.password = password;
         this.mapName = mapName;
+        this.address = address;
     }
 
     public String getName() {
@@ -53,7 +54,7 @@ public class ServerInfo {
         return "ServerInfo{" +
                 "name='" + name + '\'' +
                 ", player=" + player +
-                ", maxPlaye=" + maxPlaye +
+                ", maxPlayer=" + maxPlaye +
                 ", password=" + password +
                 ", mapName='" + mapName + '\'' +
                 ", address=" + address +

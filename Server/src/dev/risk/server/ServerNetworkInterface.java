@@ -1,6 +1,5 @@
 package dev.risk.server;
 
-import dev.risk.event.Observable;
 import dev.risk.game.GameInfo;
 import dev.risk.game.Player;
 import dev.risk.packet.UDPPacket;
@@ -16,6 +15,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Observable;
 
 /**
  * 10.01.2015
@@ -186,7 +186,8 @@ public class ServerNetworkInterface extends Observable implements Runnable {
                     response.setPacketID(choosePacketId(packet));
 
                     byte[] name = UDPPacket.serialize(info.getServerName());
-                    byte[] payload = new byte[name.length+3];
+                    byte[] mapName = UDPPacket.serialize(info.getMap().getName());
+                    byte[] payload = new byte[name.length+3+mapName.length];
 
                     //copy server status
                     payload[0] = (byte) player.size();
@@ -198,6 +199,8 @@ public class ServerNetworkInterface extends Observable implements Runnable {
 
                     //copy server name
                     System.arraycopy(name,0,payload,3,name.length);
+                    //copy map name
+                    System.arraycopy(mapName,0,payload,3+name.length,mapName.length);
 
                     //send packet
                     response.setPayload(payload);

@@ -144,13 +144,21 @@ public class MapPane extends JPanel {
         }
 
         for (Country c : map.getCountries().values()) {
-            g2.setColor(GuiColors.playerColor.get(c.getOwner().getId()));
             int x = c.getPointsPoint().x-10;
             int y = c.getPointsPoint().y-10;
-            g2.fillArc(x,y,20,20,0,360);
-            g2.setColor(Color.DARK_GRAY);
-            g2.drawArc(x, y, 20, 20, 0, 360);
-            g2.drawString("30",x+5,y+15);
+            if (c.getOwner() != null) {
+                g2.setColor(GuiColors.playerColor.get(c.getOwner().getId()));
+                g2.fillArc(x, y, 20, 20, 0, 360);
+                g2.setColor(Color.DARK_GRAY);
+                g2.drawArc(x, y, 20, 20, 0, 360);
+                g2.drawString(String.valueOf(c.getTroops()), x + 5, y + 15);
+            } else {
+                g2.setColor(Color.WHITE);
+                g2.fillArc(x, y, 20, 20, 0, 360);
+                g2.setColor(Color.DARK_GRAY);
+                g2.drawArc(x, y, 20, 20, 0, 360);
+                g2.drawString("0", x + 5, y + 15);
+            }
         }
 
         AffineTransform at = new AffineTransform();

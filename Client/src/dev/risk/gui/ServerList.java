@@ -64,6 +64,7 @@ public class ServerList extends JPanel {
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         backButton = new JButton("<- Back");
+        backButton.setActionCommand("back");
         controlPanel.add(backButton);
 
         JButton button = new JButton("Refresh");
@@ -71,6 +72,7 @@ public class ServerList extends JPanel {
         controlPanel.add(button);
 
         connectButton = new JButton("Connect");
+        connectButton.setActionCommand("connectGame");
         controlPanel.add(connectButton);
 
         this.add(controlPanel, BorderLayout.SOUTH);
@@ -93,17 +95,6 @@ public class ServerList extends JPanel {
                 packet.setAddress(InetAddress.getByAddress(new byte[]{(byte) 255, (byte) 255, (byte) 255, (byte) 255}));
                 packet.setPort(3157);
                 socket.send(packet);
-
-                {
-                    ServerInfo info = new ServerInfo("Server1 Test", 5, 8, true, "Standard", null);
-                    addServer(info);
-                    info = new ServerInfo("Some unprotected Server", 5, 8, false, "Standard", null);
-                    addServer(info);
-                    info = new ServerInfo("Low Player Server", 1, 3, false, "Standard", null);
-                    addServer(info);
-                    info = new ServerInfo("Almost Full Server", 7, 8, true, "Standard", null);
-                    addServer(info);
-                }
 
                 while (!Duration.between(Instant.now(), end).isNegative()) {
                     try {

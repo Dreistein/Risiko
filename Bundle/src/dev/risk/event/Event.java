@@ -7,6 +7,7 @@ import java.time.Instant;
  *
  * @author Dreistein
  */
+@Deprecated
 public class Event {
 
     public String eventName;

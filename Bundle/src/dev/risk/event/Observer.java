@@ -5,6 +5,7 @@ package dev.risk.event;
  *
  * @author Dreistein
  */
+@Deprecated
 public interface Observer {
     public void update(Observable sender, Event e);
 }

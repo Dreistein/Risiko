@@ -9,6 +9,7 @@ import java.time.Instant;
  *
  * @author Dreistein
  */
+@Deprecated
 public class ChatEvent extends Event {
 
     public static final String name = "EVENT_CHAT";

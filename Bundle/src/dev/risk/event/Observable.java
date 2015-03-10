@@ -7,6 +7,7 @@ import java.util.Vector;
  *
  * @author Dreistein
  */
+@Deprecated
 public class Observable {
 
     private boolean changed = false;

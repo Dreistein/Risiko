@@ -18,7 +18,7 @@ import java.util.Stack;
 public class ChatPane extends JPanel {
 
     private static final String htmlWrapper = "<html><head><style>body {font-family:\"Lucida Console\"} .prefix {width:130px} .even {background-color:#e9e9e9;} .odd {background-color:#ffffff} .private {color: #0000ff}</style></head><body><table border=\"0\" style=\"width:100%\">$data</table></body></html>";
-    private static final String templateRow = "<tr class=\"$rowID\"><td class=\"prefix\"><font color=\"$color\">$name</font> ($time)</td><td><div class=\"$type\">$message</div></td></tr>";
+    private static final String templateRow = "<tr class=\"$rowID\"><td class=\"prefix\" style=\"background-color:$color;\">$name ($time)</td><td><div class=\"$type\">$message</div></td></tr>";
 
     private Stack<ChatMessage> messages;
     private DateTimeFormatter formatter;

@@ -11,21 +11,17 @@ import java.net.InetSocketAddress;
  */
 public class ChatEvent extends Event {
 
-    private int senderId = -1;
-    private int receiverId;
+    private byte senderId = -1;
+    private byte receiverId;
     private String message;
 
-    public ChatEvent(InetSocketAddress sender, UDPPacket original, String message) {
-        this(sender, original, message, 0);
-
-    }
-    public ChatEvent(InetSocketAddress sender, UDPPacket original, String message, int receiverId) {
+    public ChatEvent(InetSocketAddress sender, UDPPacket original, String message, byte receiverId) {
         super(sender, original);
         this.message = message;
         this.receiverId = receiverId;
     }
 
-    public ChatEvent(InetSocketAddress sender, UDPPacket original, int senderId, int receiverId, String message) {
+    public ChatEvent(InetSocketAddress sender, UDPPacket original, byte senderId, byte receiverId, String message) {
         super(sender, original);
         this.senderId = senderId;
         this.receiverId = receiverId;

@@ -15,7 +15,7 @@ import java.net.InetAddress;
 
 public class ServerTest extends TestCase {
 
-    Thread server;
+    Server server;
     DatagramSocket socket;
     int port;
     String gameName = "TESTGAME";
@@ -26,8 +26,7 @@ public class ServerTest extends TestCase {
         port = 3157;
         GameInfo info = new GameInfo(2, gameName, Map.getDefault());
         info.setPassword(password);
-        server = new Thread(new ServerNetworkInterface(info));
-        server.start();
+        server = new Server(info);
         socket = new DatagramSocket();
         socket.setSoTimeout(10000);
     }
@@ -55,7 +54,7 @@ public class ServerTest extends TestCase {
     }
 
     public void tearDown() throws Exception {
-        server.interrupt();
+        server.stop();
         socket.close();
     }
 }

@@ -42,7 +42,7 @@ public class LobbyPane extends JPanel {
             panel.add(cancelButton);
             startButton = new JButton();
         }
-        cancelButton.setActionCommand("cancel game");
+        cancelButton.setActionCommand("cancelGame");
         mainPanel.add(panel, BorderLayout.SOUTH);
 
 

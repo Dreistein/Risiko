@@ -119,6 +119,9 @@ public class UDPPacket {
     public void setPacketID(int requestID) {
         this.packetID = requestID;
     }
+    public void setPacketID(UDPPacket original) {
+        this.packetID = original.getPacketID();
+    }
     public void setPayload(byte[] payload) {
         this.payload = payload;
     }
